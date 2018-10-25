@@ -7,9 +7,45 @@ function random() {
   return (Math.random() + 1).toString(36).substring(7);
 }
 
-const data = [];
+const data1 = [{
+  first: random(),
+  second: random(),
+  third: random(),
+  fourth: random(),
+  fifth: random(),
+  sixth: random(),
+  seventh: random()
+}];
+
+const data5 = [];
+for (let i = 0; i < 5; i++) {
+  data5.push({
+    first: random(),
+    second: random(),
+    third: random(),
+    fourth: random(),
+    fifth: random(),
+    sixth: random(),
+    seventh: random()
+  });
+}
+
+const data25 = [];
+for (let i = 0; i < 25; i++) {
+  data25.push({
+    first: random(),
+    second: random(),
+    third: random(),
+    fourth: random(),
+    fifth: random(),
+    sixth: random(),
+    seventh: random()
+  });
+}
+
+const data500 = [];
 for (let i = 0; i < 500; i++) {
-  data.push({
+  data500.push({
     first: random(),
     second: random(),
     third: random(),
@@ -21,14 +57,32 @@ for (let i = 0; i < 500; i++) {
 }
 
 class TestApp extends LitElement {
-  load() {
-    this.items = data;
+  load1() {
+    this.items = data1;
+    this.requestUpdate('items');
+  }
+
+  load5() {
+    this.items = data5;
+    this.requestUpdate('items');
+  }
+
+  load25() {
+    this.items = data25;
+    this.requestUpdate('items');
+  }
+
+  load500() {
+    this.items = data500;
     this.requestUpdate('items');
   }
 
   render() {
     return html`
-      <button @click="${this.load}">Load Items</button>
+      <button @click="${this.load1}">Load 1 Item</button>
+      <button @click="${this.load5}">Load 5 Items</button>
+      <button @click="${this.load25}">Load 25 Items</button>
+      <button @click="${this.load500}">Load 500 Items</button>
       <vaadin-grid .items="${this.items}">
         <vaadin-grid-column path="first"></vaadin-grid-column>
         <vaadin-grid-column path="second"></vaadin-grid-column>
