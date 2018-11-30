@@ -1,6 +1,7 @@
 import 'regenerator-runtime';
 
 import { LitElement, html } from '@polymer/lit-element';
+import { render } from 'lit-html';
 import '@vaadin/vaadin-grid';
 
 function random() {
@@ -57,6 +58,11 @@ for (let i = 0; i < 500; i++) {
 }
 
 class TestApp extends LitElement {
+  clear() {
+    this.items = [];
+    this.requestUpdate('items');
+  }
+
   load1() {
     this.items = data1;
     this.requestUpdate('items');
@@ -79,12 +85,13 @@ class TestApp extends LitElement {
 
   render() {
     return html`
+      <button @click="${this.clear}">Clear Items</button>
       <button @click="${this.load1}">Load 1 Item</button>
       <button @click="${this.load5}">Load 5 Items</button>
       <button @click="${this.load25}">Load 25 Items</button>
       <button @click="${this.load500}">Load 500 Items</button>
       <vaadin-grid .items="${this.items}">
-        <vaadin-grid-column path="first"></vaadin-grid-column>
+        <vaadin-grid-column .renderer="${this.renderFirstCell}"></vaadin-grid-column>
         <vaadin-grid-column path="second"></vaadin-grid-column>
         <vaadin-grid-column path="third"></vaadin-grid-column>
         <vaadin-grid-column path="fourth"></vaadin-grid-column>
@@ -93,6 +100,11 @@ class TestApp extends LitElement {
         <vaadin-grid-column path="seventh"></vaadin-grid-column>
       </vaadin-grid>
     `;
+  }
+
+  renderFirstCell(root, column, model) {
+    console.count('renderFirstCell');
+    render(`${model.item.first}`, root);
   }
 }
 
