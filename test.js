@@ -103,7 +103,10 @@ class TestApp extends LitElement {
   }
 
   renderFirstCell(root, column, model) {
-    console.count('renderFirstCell');
+    if (model.index === 0) {
+      console.count('renderFirstCell (1st row)');
+    }
+
     render(`${model.item.first}`, root);
   }
 }
